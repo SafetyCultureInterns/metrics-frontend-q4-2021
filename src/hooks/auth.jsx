@@ -65,22 +65,21 @@ export function useAuth() {
      * @param request {Function<Promise<any>>} the request to be performed using the access token
      * @return {Promise<void>}
      */
-    const authenticatedRequest = async (request) => {
+    const authenticatedRequest = async (request, opts = {}) => {
         try {
-            return await request(access_token);
+            return await request(opts.access_token || access_token);
         } catch (err) {
-            if (err.response.code === 401) {
-                const newToken = await refreshAccessToken();
-                return await request(newToken);
+            if (!opts.attempt && (err?.response?.status === 401 || err?.response?.code === 401)) {
+                const newAccessToken = await refreshAccessToken();
+                return await authenticatedRequest(request, { attempt: 1, access_token: newAccessToken });
             } else {
                 updateRefreshToken();
                 updateAccessToken();
+                navigate("/login")
             }
         }
     };
 
-    console.log("RETURNING NEW HOOK VALUES");
-    console.log(authenticated);
     return [
         authenticated,
         {
@@ -125,6 +124,7 @@ export function useAuth() {
                 const { access_token, refresh_token } = data;
                 updateRefreshToken(refresh_token);
                 updateAccessToken(access_token);
+                navigate("/home");
             },
 
             /**

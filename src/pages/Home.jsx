@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
 import axios from "axios";
-import { useAuth } from "../hooks/auth";
+import { useAuth } from "../hooks/auth2";
 
 export const Home = () => {
-    const [, { authenticatedRequest }] = useAuth();
+    const { authenticatedRequest } = useAuth();
 
     const [isLoading, setIsLoading] = useState(true);
     const [context, setContext] = useState(null);

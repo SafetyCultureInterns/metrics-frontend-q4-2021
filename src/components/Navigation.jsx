@@ -1,11 +1,10 @@
 import React from "react";
 
 import { AppBar, Box, Toolbar, Typography, Button, IconButton } from "@mui/material"
-import MenuIcon from "@mui/icons-material/Menu"
-import { useAuth } from "../hooks/auth";
+import { useAuth } from "../hooks/auth2";
 
 export function Navigation() {
-    const [authenticated, { logout }] = useAuth();
+    const { authenticated, logout } = useAuth();
     if (!authenticated) {
         return <></>;
     }

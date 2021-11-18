@@ -3,7 +3,7 @@ import {Box, TextField, Button} from "@mui/material";
 import styled from "styled-components"
 import {Home} from "@mui/icons-material";
 import { useNavigate, Link } from "react-router-dom";
-import {useAuth} from "../hooks/auth";
+import {useAuth} from "../hooks/auth2";
 
 const ErrorType = Object.seal({
     None: "none",
@@ -13,7 +13,7 @@ const ErrorType = Object.seal({
 
 export const Login = () => {
     const navigate = useNavigate()
-    const [, { login }] = useAuth();
+    const { login } = useAuth();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -27,7 +27,6 @@ export const Login = () => {
                 email,
                 password
             });
-            navigate("/home")
         } catch (e) {
             if (e?.response?.status === 401) {
                 setErrorType(ErrorType.Invalid);
