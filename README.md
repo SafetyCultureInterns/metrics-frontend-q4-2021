@@ -20,6 +20,10 @@ If you have some time or get lost, I would highly recommend reading it.
 - We use React-Redux for our state management. (Keeping data in local memory) [React-redux](https://react-redux.js.org/)
 
 Disclaimer: You don't have to use any of these dependencies, they are just what we have used to get started. Feel free to find your own libraries.
+
+## Extra
+- https://ui.dev/react-router-protected-routes-authentication/ for our authentication hook
+
 ## Available Scripts
 
 In the project directory, you can run:
