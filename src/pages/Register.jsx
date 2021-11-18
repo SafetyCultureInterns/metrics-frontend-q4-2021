@@ -2,32 +2,35 @@ import React, {useState} from "react";
 import {Box, TextField, Button} from "@mui/material";
 import styled from "styled-components"
 import {Home} from "@mui/icons-material";
-import {useNavigate} from "react-router-dom";
-import {useAuth} from "../../hooks/auth";
+import { useNavigate, Link } from "react-router-dom";
+import {useAuth} from "../hooks/auth";
 
-export const Login = () => {
-    const navigate = useNavigate()
-    const { login } = useAuth();
+const ErrorType = Object.seal({
+    None: "none",
+    Server: "server",
+});
 
-    const [password, setPassword] = useState("")
-    const [email, setEmail] = useState("")
-    const [hasErrored, setHasErrored] = useState(false)
+export const Register = () => {
+    const navigate = useNavigate();
+    const [, { register }] = useAuth();
 
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [errorType, setErrorType] = useState(ErrorType.None)
 
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value)
-    }
-
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value)
-    }
+    const bindInput = (setter) => (e) => setter(e.target.value);
 
     const handleSubmit = async () => {
         try {
-            await login()
+            await register({
+                name,
+                email,
+                password
+            });
             navigate("/home")
         } catch (e) {
-            setHasErrored(true)
+            setErrorType(ErrorType.Server)
         }
     }
 
@@ -50,30 +53,44 @@ export const Login = () => {
             <Title>
                 Metrics Frontend
             </Title>
-            {hasErrored && <ErrorMessage>Something has gone wrong. Please try again</ErrorMessage>}
             <>
                 <TextField
                     required
                     id="outlined-basic"
+                    label="Name"
+                    type="text"
+                    onChange={bindInput(setName)}
+                />
+                <TextField
+                    required
+                    id="outlined-basic"
                     label="Email"
-                    onChange={handleEmailChange}
+                    type="email"
+                    onChange={bindInput(setEmail)}
                 />
                 <TextField
                     id="outlined-password-input"
                     label="Password"
                     type="password"
-                    onChange={handlePasswordChange}
+                    onChange={bindInput(setPassword)}
                 />
             </>
+            <Box sx={{
+                padding: '1rem',
+                textAlign: 'center'
+            }}>
+                <Link to="/login">Have an account? Log In.</Link>
+            </Box>
+            {errorType !== ErrorType.None && <ErrorMessage>Something has gone wrong. Please try again</ErrorMessage>}
             <Button
                 sx={{margin: "0 .5rem"}}
                 variant="contained"
                 color="success"
                 endIcon={<Home/>}
-                disabled={!password || !email}
+                disabled={!name || !password || !email}
                 onClick={handleSubmit}
             >
-                Login
+                Register
             </Button>
         </Box>
     )
