@@ -1,11 +1,11 @@
 import React from "react";
 
-import { AppBar, Box, Toolbar, Typography, Button, IconButton } from "@mui/material"
-import { useAuth } from "../hooks/auth2";
+import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material"
+import { useAuth } from "../hooks/auth";
 
 export function Navigation() {
-    const { authenticated, logout } = useAuth();
-    if (!authenticated) {
+    const { isAuthenticated, logout } = useAuth();
+    if (!isAuthenticated) {
         return <></>;
     }
     return (

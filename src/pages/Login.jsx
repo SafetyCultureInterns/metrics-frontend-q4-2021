@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import {Box, TextField, Button} from "@mui/material";
 import styled from "styled-components"
 import {Home} from "@mui/icons-material";
-import { useNavigate, Link } from "react-router-dom";
-import {useAuth} from "../hooks/auth2";
+import { Link } from "react-router-dom";
+import {useAuth} from "../hooks/auth";
 
 const ErrorType = Object.seal({
     None: "none",
@@ -12,7 +12,6 @@ const ErrorType = Object.seal({
 });
 
 export const Login = () => {
-    const navigate = useNavigate()
     const { login } = useAuth();
 
     const [email, setEmail] = useState("");

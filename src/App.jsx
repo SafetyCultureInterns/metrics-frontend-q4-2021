@@ -1,11 +1,12 @@
 import React from "react";
-import {BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import styled from "styled-components";
 import { Box } from "@mui/material";
 
 import './App.css';
-import {MetricsRouter} from "./Router";
+import { MetricsRouter } from "./Router";
 import { Navigation } from "./components/Navigation";
-import { AuthProvider } from "./hooks/auth2";
+import { AuthProvider } from "./hooks/auth";
 
 function App() {
     return (
