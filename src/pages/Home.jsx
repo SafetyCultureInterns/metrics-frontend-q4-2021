@@ -7,6 +7,7 @@ export const Home = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [context, setContext] = useState(null);
+    const [newData, setNewData] = useState(null);
 
     useEffect(() => {
         authenticatedRequest(async (token) => {
@@ -15,6 +16,13 @@ export const Home = () => {
                     'Authorization': `Bearer ${token}`
                 }
             });
+
+            const { newData } = await axios.get('/services').then(res => {
+                const newData = JSON.stringify(res.data);
+                console.log(newData)
+                setNewData(newData)
+                return newData;
+            })
 
             setContext(data);
             setIsLoading(false);
@@ -25,5 +33,5 @@ export const Home = () => {
         return <div>Loading...</div>;
     }
 
-    return (<>Welcome to the app {context.account_name}</>);
+    return (<>Welcome to the app {context.account_name} and these are our services: {newData}</>);
 }
