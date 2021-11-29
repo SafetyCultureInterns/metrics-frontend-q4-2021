@@ -8,6 +8,7 @@ export const Home = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [context, setContext] = useState(null);
 
+
     useEffect(() => {
         authenticatedRequest(async (token) => {
             const { data } = await axios.get('/auth/context', {
@@ -16,10 +17,12 @@ export const Home = () => {
                 }
             });
 
+
+
             setContext(data);
             setIsLoading(false);
         });
-    }, []);
+    }, [authenticatedRequest]);
 
     if (isLoading) {
         return <div>Loading...</div>;
