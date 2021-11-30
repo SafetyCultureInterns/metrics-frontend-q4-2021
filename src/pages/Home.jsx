@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react"
 import axios from "axios";
 import { useAuth } from "../hooks/auth";
+import "../App.css";
 
 export const Home = () => {
     const { authenticatedRequest } = useAuth();
 
     const [isLoading, setIsLoading] = useState(true);
-    const [context, setContext] = useState(null);
+    const [account, setAccount] = useState(null);
 
 
     useEffect(() => {
@@ -19,7 +20,7 @@ export const Home = () => {
 
 
 
-            setContext(data);
+            setAccount(data);
             setIsLoading(false);
         });
     }, [authenticatedRequest]);
@@ -28,5 +29,7 @@ export const Home = () => {
         return <div>Loading...</div>;
     }
 
-    return (<>Welcome to the app {context.account_name}</>);
+    return (<>Welcome to the app {account.account_name}
+    <br/><br/> This is the metrics front end that displays information
+    </>);
 }
