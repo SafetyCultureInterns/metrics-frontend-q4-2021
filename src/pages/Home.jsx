@@ -25,7 +25,7 @@ export const Home = () => {
             });
 
             await axios.get('/metrics/input').then(res => {
-                console.log(res);
+
                 const pingData = res.data;
                 setPingData(pingData)
                 return pingData;
@@ -40,11 +40,5 @@ export const Home = () => {
         return <div>Loading...</div>;
     }
 
-    return (<>Welcome to the app {account.account_name} and these are our services: {newData} 
-    <br/><br/>Your pod name is: {pingData.pod_id}
-    <br/><br/>Your service is: {pingData.service_type}
-    <br/><br/>Your timestamp is: {pingData.ts}
-    <br/><br/>Your http status codes are: {JSON.stringify(pingData.http_status)}
-    <br/><br/>Your Average Latency is: {pingData.avg_latency}
-    <br/><br/>Your 99th Percentile is: {pingData.percentile_99} </>);
+    return (<>Welcome to the app {account.account_name} and these are our services: {newData} </>);
 }
