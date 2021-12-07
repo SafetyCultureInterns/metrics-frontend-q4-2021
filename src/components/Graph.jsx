@@ -58,7 +58,7 @@ function Graph(){
   const dataArray = []
   const updatedDataArray = []
 
-
+console.log("this is a test")
 
   //set initial dataset values
   var i = 0;
