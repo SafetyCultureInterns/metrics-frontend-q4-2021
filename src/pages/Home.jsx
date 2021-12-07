@@ -18,14 +18,14 @@ export const Home = () => {
                 }
             });
 
-            await axios.get('/services').then(res => {
-                const newData = JSON.stringify(res.data);
-                setNewData(newData)
-                return newData;
-            });
+            // await axios.get('/services').then(res => {
+            //     const newData = JSON.stringify(res.data);
+            //     setNewData(newData)
+            //     return newData;
+            // });
 
-            await axios.get('/metrics/input').then(res => {
-
+            await axios.get('/metrics/test').then(res => {
+                console.log(res)
                 const pingData = res.data;
                 setPingData(pingData)
                 return pingData;
