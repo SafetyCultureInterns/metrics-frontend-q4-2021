@@ -21,15 +21,12 @@ function App() {
                     }}>
                      <MetricsRouter/>
                     </Box>
-
                 </AuthProvider>
             </BrowserRouter>
         </StyledContainer>
     );
 }
-
 export default App;
-
 const StyledContainer = styled.div`
   height: 100vh;
 `

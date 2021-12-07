@@ -38,7 +38,7 @@ export const Home = () => {
             });
 
             await axios.get('/metrics/input').then(res => {
-                console.log(res);
+
                 const pingData = res.data;
                 setPingData(pingData)
                 return pingData;
