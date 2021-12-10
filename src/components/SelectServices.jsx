@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import { SimpleSelect } from './SimpleSelect';
 import { ListSubheader, List } from '@mui/material/';
 import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material/';
 import { Collapse, Checkbox, Radio } from '@mui/material/';
@@ -54,13 +55,17 @@ export function SelectServices(props) {
     // }
   };
 
-  useEffect(() => {
-    console.log("")
-  }, [checked])
 
-  const checkDisabledState = (key) => {
-
-  } 
+  useEffect(() => { 
+    const keys = Object.keys(checked);
+    const filtered = keys.filter(function(key) {
+      return checked[key];
+    });
+    const args = [];
+    for(const filter of filtered) {
+      args.push(filter.replace(ticked,""));
+    }
+  }, [checked, ticked])
 
   return (
     <List
@@ -99,4 +104,5 @@ export function SelectServices(props) {
     ))}
     </List>
   );
+
 }

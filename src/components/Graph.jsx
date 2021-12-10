@@ -1,12 +1,11 @@
-import React, { useState, useEffect} from 'react';
-import ReactDOM from "react-dom";
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-    BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Lable, ResponsiveContainer, Brush 
-  } from 'recharts';
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
 
 
-import {Container, Typography, Button} from "@mui/material";
+
+import {Typography, Button} from "@mui/material";
 
 function Graph(){
 
@@ -82,17 +81,15 @@ function Graph(){
 
 
 // update the dataset values to use a different time frame
-// for (i = 4; i >= 4 && i < 10; i++ ) {
-//     console.log(i)
-//     updatedDataArray[(i-4)] = {
-//         name: timeStamps[i], Latency: backendData[i].avg_latency}
-//     }  
+slidersfor (i = 4; i >= 4 && i < 10; i++ ) {
+    updatedDataArray[(i-4)] = {
+        name: timeStamps[i], Latency: backendData[i].avg_latency}
+    }  
 
 
 
+  const header = backendData[0].service_type.toUpperCase()
 
-
-  const header = "users";
   const title = header + ' - Latency Information';
 
   const [metrics, setMetrics] = useState(dataArray);
@@ -128,9 +125,10 @@ return (
         <Typography ml={6.5} variant="h4" component="h2">
             {graphTitle}
         </Typography>
-
         <LineChart
-            width={1250}
+
+            width={1200}
+
             height={400}
             data={moreData}
             margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
