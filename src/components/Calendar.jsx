@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 //import subWeeks from 'date-fns/subWeeks';
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -17,7 +17,6 @@ export function ViewDate() {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Stack sx={{ width: 150 }} spacing={3}>
         <DatePicker
-        views={['Day']}
         label="Today"
         value={format(date, "dd-MM-yyyy")}
         readOnly
@@ -29,7 +28,7 @@ export function ViewDate() {
    </LocalizationProvider>  
   )
 }
-
+  
 // A TO & FROM SELECTOR START
 
 // export function Calendar() {
