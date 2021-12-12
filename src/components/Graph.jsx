@@ -16,7 +16,6 @@ function Graph(){
 
     const [metricsData, setMetricsData] = useState(null);
 
-    const [name, setName] = useState("");
     const [displayedChartType, setDisplayedChartType] = useState(ChartTypes.Unknown);
 
     useEffect(() => {
@@ -34,7 +33,6 @@ function Graph(){
   const [moreData, setMoreData] = useState(metricsData);
   const [otherData, setOtherData] = useState(metricsData);
 
-
     useEffect(() => {
         if (metricsData && metricsData.length > 0){
             for (let i = 0 ; i < 70; i++) {
@@ -50,10 +48,8 @@ function Graph(){
                 }
                 setMoreData(dataArray)
 
-
         }
     },[metricsData])
-
 
 
 
@@ -83,10 +79,11 @@ function Graph(){
 
     const [minLatency, setMinLatency] = useState();
 
-    const header = "users";
-    const title = header + ' - Latency Information';
+    // const header = "users";
 
-    const [metrics, setMetrics] = useState(dataArray);
+    const title = 'Users - Latency Information';
+
+    // const [metrics, setMetrics] = useState(dataArray);
     const [graphTitle, setGraphTitle] = useState(title);
 
 return (
@@ -96,7 +93,7 @@ return (
         <Button variant="contained"
             onClick={() => {setMoreData(
             otherData); 
-            {setGraphTitle("This is different data")}}} > Change Data
+            {setGraphTitle(metricsData[100].service_type)}}} > Change Data
         </Button>
         
         <Button variant="contained"
@@ -141,7 +138,7 @@ return (
         )}
         {displayedChartType === ChartTypes.Bar && (
 
-            <BarChart id = "BAR" width={730} height={250} data={moreData}>
+            <BarChart width={730} height={250} data={moreData}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis />
