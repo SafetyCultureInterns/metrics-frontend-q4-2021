@@ -5,6 +5,8 @@ import { useAuth } from "../hooks/auth";
 import { ViewDate } from "../components/Calendar";
 import { SimpleSelect } from "../components/SimpleSelect";
 import { SelectServices } from "../components/SelectServices";
+import Graph from '../components/Graph';
+
 import { Checkbox } from "@mui/material";
 
 import LockIcon from '@mui/icons-material/Lock';
@@ -13,6 +15,26 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import AssistantPhotoIcon from '@mui/icons-material/AssistantPhoto';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
+
+
+export const menuItems = [{label:"10 Minutes", value:"tenMinutes"}, {label:"1 Hour", value:"oneHour"},
+{label:"6 Hours", value:"sixHours"}, {label:"12 Hours", value:"twelvehours"}, {label:"24 Hours", value:"oneDay"}]
+
+export const filterMenuItems = [
+   {primary: "Status", key: "status"},
+   {primary: "Average Latency", key: "avglat"},
+   {primary: "Maximum Latency", key: "maxlat"},
+   {primary: "Minimum Latency", key: "minlat"},
+]
+
+export const serviceMenuItems = [ 
+{primary: "Authorization", icon: <LockIcon/>, key: "auth"},
+{primary: "User", icon: <PersonIcon/>, key: "user"},
+{primary: "Carts", icon: <ShoppingCartIcon/>, key: "cart"},
+{primary: "Products", icon: <Inventory2Icon/>, key: "products"},
+{primary: "Suggestions", icon:<AssistantPhotoIcon/>, key: "suggestions"},
+{primary: "Billing", icon: <CreditCardIcon/>, key: "billing"},
+]
 
 
 export const Home = () => {
@@ -53,24 +75,6 @@ export const Home = () => {
         return <div>Loading...</div>;
     }
 
-    const menuItems = [{label:"10 Minutes", value:"tenMinutes"}, {label:"1 Hour", value:"oneHour"},
-     {label:"6 Hours", value:"sixHours"}, {label:"12 Hours", value:"twelvehours"}, {label:"24 Hours", value:"oneDay"}]
-
-    const filterMenuItems = [
-        {primary: "Status", key: "status"},
-        {primary: "Average Latency", key: "avglat"},
-        {primary: "Maximum Latency", key: "maxlat"},
-        {primary: "Minimum Latency", key: "minlat"},
-    ]
-
-    const serviceMenuItems = [ 
-     {primary: "Authorization", icon: <LockIcon/>, key: "auth"},
-     {primary: "User", icon: <PersonIcon/>, key: "user"},
-     {primary: "Carts", icon: <ShoppingCartIcon/>, key: "cart"},
-     {primary: "Products", icon: <Inventory2Icon/>, key: "products"},
-     {primary: "Suggestions", icon:<AssistantPhotoIcon/>, key: "suggestions"},
-     {primary: "Billing", icon: <CreditCardIcon/>, key: "billing"},
-    ]
         
     return (<>Welcome to the app {account.account_name} and these are our services: {newData} 
                     <SimpleSelect menuItems={menuItems} title="Time"/>
@@ -78,6 +82,12 @@ export const Home = () => {
                 <ViewDate/>
                 <br></br>
                 <SelectServices serviceMenuItems={serviceMenuItems} filterMenuItems={filterMenuItems}/>
+                <br/><br/>
+                <Graph/>
+                <br></br>
+                <br></br>
+                
+                
 
     </>);
 }

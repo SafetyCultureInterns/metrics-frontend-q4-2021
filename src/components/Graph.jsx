@@ -1,23 +1,30 @@
 import React, { useState, useEffect} from 'react';
-import ReactDOM from "react-dom";
 import axios from 'axios';
 import {
     BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Lable, ResponsiveContainer, Brush 
   } from 'recharts';
 
+import {Typography, Button} from "@mui/material";
 
-import {Container, Typography, Button} from "@mui/material";
+const ChartTypes = Object.freeze({
+    Unknown: "unknown",
+    Bar: "bar",
+    Line: "line",
+});
 
 function Graph(){
 
     const [metricsData, setMetricsData] = useState(null);
+
+    const [name, setName] = useState("");
+    const [displayedChartType, setDisplayedChartType] = useState(ChartTypes.Unknown);
 
     useEffect(() => {
         axios.get('/metrics/test').then(res => {
             // console.log(res)
             const metricsData = res.data;
             setMetricsData(metricsData)
-            console.log("LENGTH IS: " + metricsData.length)
+           
 
         });
     }, []);
@@ -25,24 +32,34 @@ function Graph(){
   const dataArray = [];
   const updatedDataArray = [];
   const [moreData, setMoreData] = useState(metricsData);
+  const [otherData, setOtherData] = useState(metricsData);
 
 
     useEffect(() => {
         if (metricsData && metricsData.length > 0){
             for (let i = 0 ; i < 70; i++) {
-                // console.log(metricsData[i].ts)
-
+                
                 dataArray[i] = {
                     name: new Date(metricsData[i].ts ).toLocaleString("en-GB", 
                     {hour: "numeric", minute: "numeric", second: "numeric"}), 
                     Latency: metricsData[i].avg_lat,
-                     MaxLatency: metricsData[i].avg_max, 
-                     MinLatency: metricsData[i].avg_min,
+                    MaxLatency: metricsData[i].avg_max, 
+                    MinLatency: metricsData[i].avg_min,
                     ServiceType: metricsData[i].service_type}
                 
                 }
                 setMoreData(dataArray)
-            for (let i = 71; i < 100; i ++){
+
+
+        }
+    },[metricsData])
+
+
+
+
+    useEffect(() => {
+        if (metricsData && metricsData.length > 0){
+            for (let i = 0; i < 10; i ++){
 
                 updatedDataArray[i] = {
                     name: new Date(metricsData[i].ts ).toLocaleString("en-GB", 
@@ -51,64 +68,34 @@ function Graph(){
                      MaxLatency: metricsData[i].avg_max, 
                      MinLatency: metricsData[i].avg_min,
                     ServiceType: metricsData[i].service_type}
+            } setOtherData(updatedDataArray)
+            console.log(otherData)
+            
 
-            }    
+
         }
     },[metricsData])
+                    
 
-
-
-    
-    
 
 
  
 
     const [minLatency, setMinLatency] = useState();
 
-    //Change times from UNIX to readable english
-    
-    // const timeStamps = moreData.map(time => new Date(time.ts * 1000).toLocaleString("en-US", {hour: "numeric"}))
+    const header = "users";
+    const title = header + ' - Latency Information';
 
-    // const timeStamps = someStuff.map(time => {
-    //     const {ts, service_type} = time;
-    // })
-
-
-  const dataArray = []
-  const updatedDataArray = []
-
-console.log("this is a test")
-
-  //set initial dataset values
-  
-
-
-// update the dataset values to use a different time frame
-// for (i = 4; i >= 4 && i < 10; i++ ) {
-//     console.log(i)
-//     updatedDataArray[(i-4)] = {
-//         name: timeStamps[i], Latency: backendData[i].avg_latency}
-//     }  
-
-
-
-
-
-  const header = "users";
-  const title = header + ' - Latency Information';
-
-  const [metrics, setMetrics] = useState(dataArray);
-  const [graphTitle, setGraphTitle] = useState(title);
-
+    const [metrics, setMetrics] = useState(dataArray);
+    const [graphTitle, setGraphTitle] = useState(title);
 
 return (
 
     
     <div>
         <Button variant="contained"
-            onClick={() => {setMetrics(
-            updatedDataArray); 
+            onClick={() => {setMoreData(
+            otherData); 
             {setGraphTitle("This is different data")}}} > Change Data
         </Button>
         
@@ -117,58 +104,71 @@ return (
             "MinLatency"); }} > Show Min Latency
         </Button>
 
-        <Button variant="contained"
-            onClick={() => {<BarChart width={730} height={250} data={metrics}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="Latency" fill="#8884d8" />
-              </BarChart> }} > Make a bar graph
+        <Button id = "bar" variant="contained"
+            onClick={() => {setDisplayedChartType(ChartTypes.Bar) }} > Make a bar graph
         </Button>
 
         <Typography ml={6.5} variant="h4" component="h2">
             {graphTitle}
         </Typography>
 
-        <LineChart
-            width={1250}
-            height={400}
-            data={moreData}
-            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis type="number" domain={[100, 300]}/>
-            <Tooltip />
-            <Line
-                type='monotone'
-                dataKey={'Latency'}
-                stroke='#8884d8'
-                fill='#8884d8'
-            />
-            <Line
-                type='monotone'
-                dataKey={minLatency}
-                stroke='#E1341E'
-                fill='#8884d8' 
-            />
+
+        {[ChartTypes.Line, ChartTypes.Unknown].indexOf(displayedChartType) != -1  && (
+
+            <LineChart
+                width={1200}
+                height={400}
+                data={moreData}
+                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis type="number"/>
+                <Tooltip />
+                <Line   
+                    type='monotone'
+                    dataKey={'Latency'}
+                    stroke='#8884d8'
+                    fill='#8884d8'
+                />
+                <Line
+                    type='monotone'
+                    dataKey={minLatency}
+                    stroke='#E1341E'
+                    fill='#8884d8' 
+                />
+            </LineChart>
+
+        )}
+        {displayedChartType === ChartTypes.Bar && (
+
+            <BarChart id = "BAR" width={730} height={250} data={moreData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="Latency" fill="#8884d8" />
+                </BarChart> 
+
+        )}
+
+        {/* {displayedChartType === ChartTypes.Unknown && (
+            <div>
+                <button onClick={() => setDisplayedChartType(ChartTypes.Bar)}>Bar</button>
+                <button onClick={() => setDisplayedChartType(ChartTypes.Line)}>Line</button>
+            </div>
+        )} */}
 
 
 
-            {/* <Line
-                type='monotone'
-                dataKey={'amt'}
-                stroke='#E1341E'
-                fill='#6764d8' 
-            /> */}
-        </LineChart>
+        
    </div>
 
 
 )
 
 }
+
 
 
 export default Graph

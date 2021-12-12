@@ -17,7 +17,6 @@ export function ViewDate() {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Stack sx={{ width: 150 }} spacing={3}>
         <DatePicker
-        views={['Day']}
         label="Today"
         value={format(date, "dd-MM-yyyy")}
         readOnly
