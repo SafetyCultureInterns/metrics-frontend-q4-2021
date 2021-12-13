@@ -1,16 +1,19 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import {
-    BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Lable, ResponsiveContainer, Brush 
-  } from 'recharts';
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
 
 import {Typography, Button} from "@mui/material";
+
 
 const ChartTypes = Object.freeze({
     Unknown: "unknown",
     Bar: "bar",
     Line: "line",
 });
+
+
+import {Typography, Button} from "@mui/material";
 
 function Graph(){
 
@@ -85,6 +88,25 @@ function Graph(){
 
     // const [metrics, setMetrics] = useState(dataArray);
     const [graphTitle, setGraphTitle] = useState(title);
+  //set initial dataset values
+  
+
+
+// update the dataset values to use a different time frame
+slidersfor (i = 4; i >= 4 && i < 10; i++ ) {
+    updatedDataArray[(i-4)] = {
+        name: timeStamps[i], Latency: backendData[i].avg_latency}
+    }  
+
+
+
+  const header = backendData[0].service_type.toUpperCase()
+
+  const title = header + ' - Latency Information';
+
+  const [metrics, setMetrics] = useState(dataArray);
+  const [graphTitle, setGraphTitle] = useState(title);
+
 
 return (
 
@@ -108,6 +130,7 @@ return (
         <Typography ml={6.5} variant="h4" component="h2">
             {graphTitle}
         </Typography>
+
 
 
         {[ChartTypes.Line, ChartTypes.Unknown].indexOf(displayedChartType) != -1  && (
@@ -161,6 +184,39 @@ return (
 
 
         
+        <LineChart
+
+            width={1200}
+
+            height={400}
+            data={moreData}
+            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis type="number" domain={[100, 300]}/>
+            <Tooltip />
+            <Line
+                type='monotone'
+                dataKey={'Latency'}
+                stroke='#8884d8'
+                fill='#8884d8'
+            />
+            <Line
+                type='monotone'
+                dataKey={minLatency}
+                stroke='#E1341E'
+                fill='#8884d8' 
+            />
+
+
+
+            {/* <Line
+                type='monotone'
+                dataKey={'amt'}
+                stroke='#E1341E'
+                fill='#6764d8' 
+            /> */}
+        </LineChart>
    </div>
 
 

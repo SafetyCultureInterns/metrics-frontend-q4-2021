@@ -4,21 +4,27 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { defValue } from '../pages/Home';
 
 export function SimpleSelect(props) {
-  const [value, setValue] = React.useState('');
+
+  const [value, setValue] = React.useState(defValue);
+
+  const handleOnChange = (e) => {
+    const value = e.target.value;
+    setValue(value);
+    props.onValueChange(value)
+  }
 
   return (
-    <Box sx={{ width: 135  }}>
+    <Box sx={{ width: 135, paddingLeft: 100 }}>
       <FormControl fullWidth>
         <InputLabel id="time-id">{props.title}</InputLabel>
         <Select
           value={value}
           label="Time"
-          onChange={(e)=> setValue(e.target.value)}
-          placeholder="Time"
+          onChange={(e)=> handleOnChange(e)}
         >
-         
           {props.menuItems.map(item => {
             return <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
           })}
