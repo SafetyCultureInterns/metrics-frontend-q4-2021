@@ -93,7 +93,7 @@ return (
         <Button variant="contained"
             onClick={() => {setMoreData(
             otherData); 
-            {setGraphTitle(metricsData[100].service_type)}}} > Change Data
+            {setGraphTitle(metricsData[100].service_type + " - Latency Information")}}} > Change Data
         </Button>
         
         <Button variant="contained"
