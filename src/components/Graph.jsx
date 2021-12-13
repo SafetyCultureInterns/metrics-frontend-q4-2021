@@ -19,7 +19,7 @@ function Graph(){
     const [displayedChartType, setDisplayedChartType] = useState(ChartTypes.Unknown);
 
     useEffect(() => {
-        axios.get('/metrics/test').then(res => {
+        axios.get('/metrics/getdata').then(res => {
             // console.log(res)
             const metricsData = res.data;
             setMetricsData(metricsData)
@@ -35,7 +35,7 @@ function Graph(){
 
     useEffect(() => {
         if (metricsData && metricsData.length > 0){
-            for (let i = 0 ; i < 70; i++) {
+            for (let i = 0 ; i < 40; i++) {
                 
                 dataArray[i] = {
                     name: new Date(metricsData[i].ts ).toLocaleString("en-GB", 

@@ -59,7 +59,7 @@ export const Home = () => {
             //     return newData;
             // });
 
-            await axios.get('/metrics/test').then(res => {
+            await axios.get('/metrics/getdata').then(res => {
                 console.log(res)
                 const pingData = res.data;
                 setPingData(pingData)
