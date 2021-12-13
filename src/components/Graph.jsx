@@ -119,16 +119,18 @@ return (
                 margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
-                <YAxis type="number"/>
+                <YAxis type="number" domain={["dataMin - 10", "dataMax + 10"]}/>
                 <Tooltip />
                 <Line   
                     type='monotone'
+                    strokeWidth={2}
                     dataKey={'Latency'}
                     stroke='#8884d8'
                     fill='#8884d8'
                 />
                 <Line
                     type='monotone'
+                    strokeWidth={2}
                     dataKey={minLatency}
                     stroke='#E1341E'
                     fill='#8884d8' 
